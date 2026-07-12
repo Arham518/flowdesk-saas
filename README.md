@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FlowDesk – Modern SaaS Productivity Platform
 
 FlowDesk is a modern and responsive SaaS web application built with React. It provides a clean user experience with productivity tools such as task management, notes, analytics, and team collaboration in a professional dashboard interface.
@@ -76,3 +77,7 @@ src/
 ## License
 
 This project is created for learning, portfolio, and demonstration purposes.
+=======
+# flowdesk-saas
+A modern SaaS productivity platform built with React featuring task management, notes, analytics dashboard, responsive UI, reusable components, and clean architecture.
+>>>>>>> 81711d8ef326982c09ec1683fae12a0af25ef2c9
