@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+
+:root {
+  /* Color Palette */
+  --background: #FAF7F2;
+  --surface: #FFFFFF;
+  --text-primary: #1C1B1A;
+  --text-secondary: #706C64;
+  --text-muted: #A39E93;
+  --primary-btn: #2B2B2B;
+  --primary-btn-hover: #1C1B1A;
+  --accent: #C9A227;
+  --accent-light: #F4EEDD;
+  --border: #E7E1D7;
+  --success: #3D7A52;
+  --success-light: #EBF4EE;
+  --error: #C94C4C;
+  --error-light: #FCEAEA;
+
+  /* Typography */
+  --font-headings: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+
+  /* Layout & Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-4xl: 96px;
+
+  /* Design Attributes */
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --shadow-subtle: 0 4px 20px rgba(43, 43, 43, 0.03);
+  --shadow-medium: 0 12px 36px rgba(43, 43, 43, 0.05);
+  --shadow-premium: 0 20px 50px rgba(43, 43, 43, 0.08);
+  --transition-smooth: all 250ms cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-slow: all 350ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Modern Reset & Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--background);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Typography Base */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headings);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2.75rem;
+}
+h2 {
+  font-size: 2.25rem;
+}
+h3 {
+  font-size: 1.75rem;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+code {
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  background-color: var(--accent-light);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+}
+
+/* Selection Color */
+::selection {
+  background-color: var(--accent-light);
+  color: var(--text-primary);
+}
+
+/* Focus Outline for Accessibility */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Shared Layout Containers */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.section-padding {
+  padding: var(--spacing-4xl) 0;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.25rem;
+  }
+  h2 {
+    font-size: 1.85rem;
+  }
+  .section-padding {
+    padding: var(--spacing-2xl) 0;
+  }
+}
+
+/* Layout Utilities */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-xl);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-xl);
+}
+
+@media (max-width: 992px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3 {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+}
+
+/* Reusable Glassmorphism / Surface Panel Styles */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-subtle);
+  transition: var(--transition-smooth);
+}
+
+.panel:hover {
+  box-shadow: var(--shadow-medium);
+  border-color: var(--accent);
+}
