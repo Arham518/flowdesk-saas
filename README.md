@@ -7,6 +7,8 @@ Built with **React 19, Vite, Framer Motion, Recharts and lucide-react**, styled 
 > **Status:** front-end demo. All workspace data is mock data held in React state.
 > There is **no backend, no login and no persistence** — refresh clears edits.
 
+![Home](docs/screenshots/home-desktop.png)
+
 ## What works now vs. simulated vs. planned
 
 | Area | Status |
@@ -34,6 +36,12 @@ npm run lint      # oxlint
 ```
 
 Requires Node 18+.
+
+## Screenshots
+
+| Home |
+| --- |
+| ![](docs/screenshots/home-desktop.png) |
 
 ## Project structure
 
