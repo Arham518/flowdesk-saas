@@ -1,7 +1,7 @@
 {
-  "name": "swebsite",
+  "name": "aveniq",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -22,5 +22,6 @@
     "@vitejs/plugin-react": "^6.0.3",
     "oxlint": "^1.71.0",
     "vite": "^8.1.1"
-  }
+  },
+  "description": "AVENIQ - team workspace for tasks, notes, jobs, calendar and analytics"
 }

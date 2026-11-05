@@ -86,14 +86,14 @@ const calendarEvents = [
 ];
 
 const teamMembers = [
-  { id: 1, name: 'Arham Bhatti', role: 'Admin', department: 'Engineering', email: 'alex@syncflow.io', status: 'Active', initials: 'AM' },
-  { id: 2, name: 'Alina Sheikh', role: 'Lead Designer', department: 'Design', email: 'sarah@syncflow.io', status: 'Active', initials: 'SC' },
-  { id: 3, name: 'Hassan Fareed', role: 'Backend Engineer', department: 'Engineering', email: 'marcus@syncflow.io', status: 'Away', initials: 'MR' },
-  { id: 4, name: 'Fatima Ahmed', role: 'Product Manager', department: 'Product', email: 'priya@syncflow.io', status: 'Active', initials: 'PS' },
-  { id: 5, name: 'Hamza Ali', role: 'DevOps Engineer', department: 'Engineering', email: 'tom@syncflow.io', status: 'Offline', initials: 'TW' },
-  { id: 6, name: 'Mahnoor Ali', role: 'Frontend Engineer', department: 'Engineering', email: 'lisa@syncflow.io', status: 'Active', initials: 'LP' },
-  { id: 7, name: 'Jatin Khatri', role: 'Data Analyst', department: 'Analytics', email: 'james@syncflow.io', status: 'Away', initials: 'JO' },
-  { id: 8, name: 'Zara Ahmed', role: 'UX Researcher', department: 'Design', email: 'nina@syncflow.io', status: 'Offline', initials: 'NP' },
+  { id: 1, name: 'Arham Bhatti', role: 'Admin', department: 'Engineering', email: 'alex@aveniq.io', status: 'Active', initials: 'AM' },
+  { id: 2, name: 'Alina Sheikh', role: 'Lead Designer', department: 'Design', email: 'sarah@aveniq.io', status: 'Active', initials: 'SC' },
+  { id: 3, name: 'Hassan Fareed', role: 'Backend Engineer', department: 'Engineering', email: 'marcus@aveniq.io', status: 'Away', initials: 'MR' },
+  { id: 4, name: 'Fatima Ahmed', role: 'Product Manager', department: 'Product', email: 'priya@aveniq.io', status: 'Active', initials: 'PS' },
+  { id: 5, name: 'Hamza Ali', role: 'DevOps Engineer', department: 'Engineering', email: 'tom@aveniq.io', status: 'Offline', initials: 'TW' },
+  { id: 6, name: 'Mahnoor Ali', role: 'Frontend Engineer', department: 'Engineering', email: 'lisa@aveniq.io', status: 'Active', initials: 'LP' },
+  { id: 7, name: 'Jatin Khatri', role: 'Data Analyst', department: 'Analytics', email: 'james@aveniq.io', status: 'Away', initials: 'JO' },
+  { id: 8, name: 'Zara Ahmed', role: 'UX Researcher', department: 'Design', email: 'nina@aveniq.io', status: 'Offline', initials: 'NP' },
 ];
 
 const analyticsData = {
@@ -972,7 +972,7 @@ function AnalyticsTab() {
 // ─── SETTINGS TAB ─────────────────────────────────────────────────────────────
 function SettingsTab() {
   const [settingsTab, setSettingsTab] = useState('general');
-  const [workspaceName, setWorkspaceName] = useState('SyncFlow Workspace');
+  const [workspaceName, setWorkspaceName] = useState('AVENIQ Workspace');
   const [timezone, setTimezone] = useState('UTC-5 (Eastern)');
   const [language, setLanguage] = useState('English (US)');
   const [notifs, setNotifs] = useState({ email: true, tasks: true, mentions: false, weekly: true });
@@ -1214,7 +1214,7 @@ export default function WorkspaceConsole({ setActivePage }) {
                 <div style={{ width: 34, height: 34, borderRadius: 9, background: C.accent, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Zap size={18} color="#FFF" />
                 </div>
-                <span style={{ fontFamily: 'Playfair Display, serif', fontSize: 18, fontWeight: 700, color: C.textPrimary }}>SyncFlow</span>
+                <span style={{ fontFamily: 'Playfair Display, serif', fontSize: 18, fontWeight: 700, color: C.textPrimary }}>AVENIQ</span>
               </div>
             </div>
 

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import {
   LayoutDashboard,CheckSquare,FileText,Briefcase,
   Calendar,  Users,  BarChart3,  Settings, Check,ChevronDown,Zap,TrendingUp,  Shield,ArrowRight,Play,Star,
@@ -21,8 +21,37 @@ const C = {
   dark: '#1C1B1A',
 };
 
-const fade = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } } };
-const stagger = { show: { transition: { staggerChildren: 0.1 } } };
+const fade = {
+  hidden: { opacity: 0, y: 28, filter: 'blur(8px)' },
+  show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+};
+const stagger = { show: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } } };
+
+// 3D tilt wrapper that follows the cursor (springs back on leave)
+const Tilt = ({ children, max = 8 }) => {
+  const mx = useMotionValue(0.5), my = useMotionValue(0.5);
+  const rx = useSpring(useTransform(my, [0, 1], [max, -max]), { stiffness: 150, damping: 18 });
+  const ry = useSpring(useTransform(mx, [0, 1], [-max, max]), { stiffness: 150, damping: 18 });
+  return (
+    <div style={{ perspective: 1400 }}>
+      <motion.div
+        style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
+        onMouseMove={e => { const r = e.currentTarget.getBoundingClientRect(); mx.set((e.clientX - r.left) / r.width); my.set((e.clientY - r.top) / r.height); }}
+        onMouseLeave={() => { mx.set(0.5); my.set(0.5); }}
+      >{children}</motion.div>
+    </div>
+  );
+};
+
+// Soft drifting gold/violet glow behind the hero
+const HeroGlow = () => (
+  <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+    <motion.div animate={{ x: [0, 60, -30, 0], y: [0, -40, 30, 0], scale: [1, 1.15, 0.95, 1] }} transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+      style={{ position: 'absolute', top: -120, left: '10%', width: 460, height: 460, borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,162,39,0.28), transparent 65%)', filter: 'blur(30px)' }} />
+    <motion.div animate={{ x: [0, -50, 40, 0], y: [0, 50, -20, 0] }} transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
+      style={{ position: 'absolute', top: 40, right: '5%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(124,108,255,0.18), transparent 65%)', filter: 'blur(30px)' }} />
+  </div>
+);
 
 // ─── Reusable tiny components ─────────────────────────────────────────────────
 const Section = ({ children, style = {} }) => (
@@ -78,7 +107,7 @@ const DashboardMockup = () => {
         <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FF5F57', display: 'inline-block' }} />
         <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FFBD2E', display: 'inline-block' }} />
         <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#28C940', display: 'inline-block' }} />
-        <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#555', marginLeft: 8 }}>SyncFlow — Dashboard</span>
+        <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#555', marginLeft: 8 }}>AVENIQ — Dashboard</span>
       </div>
       <div style={{ display: 'flex', minHeight: 280 }}>
         {/* Sidebar */}
@@ -133,24 +162,26 @@ const DashboardMockup = () => {
 };
 
 const Hero = ({ setActivePage, featuresRef }) => (
-  <Section style={{ padding: '100px 0 80px', background: C.bg }}>
-    <Container>
+  <Section style={{ padding: '100px 0 80px', background: C.bg, position: 'relative', overflow: 'hidden' }}>
+    <HeroGlow />
+    <Container style={{ position: 'relative' }}>
       <motion.div variants={stagger} initial="hidden" animate="show" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 28 }}>
         <motion.div variants={fade}>
           <Tag><Star size={11} /> New · AI Task Engine v2</Tag>
         </motion.div>
         <motion.div variants={fade} style={{ maxWidth: 780 }}>
-          <H1>The only workspace your team will ever need.</H1>
+          <H1>The only workspace your team will <span className="av-shimmer">ever need.</span></H1>
         </motion.div>
         <motion.div variants={fade} style={{ maxWidth: 560 }}>
           <Body secondary>
-            SyncFlow unifies task management, notes, job tracking, shared calendars, and real-time analytics — so your team can move faster without switching tabs.
+            AVENIQ unifies task management, notes, job tracking, shared calendars, and real-time analytics — so your team can move faster without switching tabs.
           </Body>
         </motion.div>
         <motion.div variants={fade} style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
           <button
+            className="av-sheen"
             onClick={() => setActivePage('workspace')}
-            style={{ background: C.btn, color: '#fff', border: 'none', borderRadius: 12, padding: '14px 28px', fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 15, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, transition: 'opacity 0.2s' }}
+            style={{ position: 'relative', overflow: 'hidden', background: C.btn, color: '#fff', border: 'none', borderRadius: 12, padding: '14px 28px', fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 15, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, transition: 'opacity 0.2s' }}
             onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
             onMouseLeave={e => e.currentTarget.style.opacity = '1'}
           >
@@ -166,7 +197,9 @@ const Hero = ({ setActivePage, featuresRef }) => (
           </button>
         </motion.div>
         <motion.div variants={fade} style={{ width: '100%', maxWidth: 860, marginTop: 16 }}>
-          <DashboardMockup />
+          <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}>
+            <Tilt><DashboardMockup /></Tilt>
+          </motion.div>
         </motion.div>
       </motion.div>
     </Container>
@@ -196,7 +229,7 @@ const SocialProof = () => (
 const TerminalBlock = () => (
   <div style={{ background: '#111', borderRadius: 12, padding: '16px', fontFamily: "'JetBrains Mono', monospace", fontSize: 12, lineHeight: 1.7, marginTop: 16, overflow: 'hidden' }}>
     <div style={{ color: '#555', marginBottom: 8 }}>// AI Task Engine · auto-assign</div>
-    <div><span style={{ color: '#7C6CFF' }}>const</span> <span style={{ color: '#3DA4C9' }}>task</span> <span style={{ color: '#fff' }}>= await</span> <span style={{ color: C.accent }}>syncflow</span><span style={{ color: '#fff' }}>.</span><span style={{ color: '#3DA4C9' }}>createTask</span><span style={{ color: '#fff' }}>(&#123;</span></div>
+    <div><span style={{ color: '#7C6CFF' }}>const</span> <span style={{ color: '#3DA4C9' }}>task</span> <span style={{ color: '#fff' }}>= await</span> <span style={{ color: C.accent }}>aveniq</span><span style={{ color: '#fff' }}>.</span><span style={{ color: '#3DA4C9' }}>createTask</span><span style={{ color: '#fff' }}>(&#123;</span></div>
     <div style={{ paddingLeft: 16 }}><span style={{ color: '#C9A227' }}>title</span><span style={{ color: '#fff' }}>: </span><span style={{ color: '#3D7A52' }}>"Launch v2 campaign"</span><span style={{ color: '#fff' }}>,</span></div>
     <div style={{ paddingLeft: 16 }}><span style={{ color: '#C9A227' }}>priority</span><span style={{ color: '#fff' }}>: </span><span style={{ color: '#7C6CFF' }}>"high"</span><span style={{ color: '#fff' }}>,</span></div>
     <div style={{ paddingLeft: 16 }}><span style={{ color: '#C9A227' }}>assignee</span><span style={{ color: '#fff' }}>: </span><span style={{ color: '#3D7A52' }}>"ai:auto"</span><span style={{ color: '#fff' }}>,</span></div>
@@ -410,7 +443,7 @@ const ProductPreview = ({ setActivePage }) => (
         <motion.div variants={fade} style={{ textAlign: 'center', marginBottom: 40 }}>
           <Tag>Product</Tag>
           <div style={{ marginTop: 16 }}>
-            <H2 center>See SyncFlow in action</H2>
+            <H2 center>See AVENIQ in action</H2>
           </div>
           <Body secondary style={{ marginTop: 12, maxWidth: 480, margin: '12px auto 0' }}>
             An entire workspace — tasks, docs, tracking, and analytics — in one beautiful interface.
@@ -423,7 +456,7 @@ const ProductPreview = ({ setActivePage }) => (
               <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FF5F57', display: 'inline-block' }} />
               <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FFBD2E', display: 'inline-block' }} />
               <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#28C940', display: 'inline-block' }} />
-              <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#555', marginLeft: 8 }}>SyncFlow — Kanban Board</span>
+              <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#555', marginLeft: 8 }}>AVENIQ — Kanban Board</span>
               <div style={{ marginLeft: 'auto', display: 'flex', gap: 8 }}>
                 <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#555', background: '#1e1e1e', padding: '3px 8px', borderRadius: 6 }}>Board</span>
                 <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#555', background: '#1e1e1e', padding: '3px 8px', borderRadius: 6 }}>List</span>
@@ -473,7 +506,7 @@ const benefits = [
     icon: <Zap size={22} color={C.accent} />,
     color: C.accent,
     heading: 'Save 3 hours daily',
-    desc: 'Stop toggling between 6 apps. SyncFlow consolidates your entire workflow so you spend time doing, not managing.',
+    desc: 'Stop toggling between 6 apps. AVENIQ consolidates your entire workflow so you spend time doing, not managing.',
   },
   {
     icon: <Star size={22} color="#7C6CFF" />,
@@ -532,7 +565,7 @@ const plans = [
     name: 'Professional',
     monthly: 29,
     annual: 23,
-    desc: 'The full power of SyncFlow for growing teams.',
+    desc: 'The full power of AVENIQ for growing teams.',
     features: ['Unlimited team members', 'Unlimited projects', 'AI Task Engine (full)', 'Advanced analytics', 'Integrations (50+)', 'Priority support'],
     popular: true,
     cta: 'Start Free Trial',
@@ -634,16 +667,16 @@ const Pricing = ({ setActivePage }) => {
 // ─── 7. FAQ ACCORDION ────────────────────────────────────────────────────────
 const faqs = [
   {
-    q: 'How does SyncFlow compare to Notion?',
-    a: "SyncFlow is purpose-built for team operations — not just note-taking. While Notion excels at knowledge bases, SyncFlow adds AI-powered task routing, real-time analytics, job tracking, and a shared calendar. It's the difference between a notebook and a command center.",
+    q: 'How does AVENIQ compare to Notion?',
+    a: "AVENIQ is purpose-built for team operations — not just note-taking. While Notion excels at knowledge bases, AVENIQ adds AI-powered task routing, real-time analytics, job tracking, and a shared calendar. It's the difference between a notebook and a command center.",
   },
   {
     q: 'Can I import from Jira or Asana?',
-    a: 'Yes! SyncFlow supports one-click CSV and API imports from Jira, Asana, Trello, Linear, and Monday.com. Your existing projects, labels, assignees, and due dates migrate in minutes.',
+    a: 'Yes! AVENIQ supports one-click CSV and API imports from Jira, Asana, Trello, Linear, and Monday.com. Your existing projects, labels, assignees, and due dates migrate in minutes.',
   },
   {
     q: 'Is my data secure?',
-    a: 'Absolutely. SyncFlow is SOC 2 Type II certified, GDPR compliant, and encrypted at rest (AES-256) and in transit (TLS 1.3). Enterprise plans support SSO, SAML, and private cloud deployments.',
+    a: 'Absolutely. AVENIQ is SOC 2 Type II certified, GDPR compliant, and encrypted at rest (AES-256) and in transit (TLS 1.3). Enterprise plans support SSO, SAML, and private cloud deployments.',
   },
   {
     q: 'Do you offer a free trial?',
@@ -651,7 +684,7 @@ const faqs = [
   },
   {
     q: 'How does team collaboration work?',
-    a: 'SyncFlow shows live presence, real-time cursor activity on shared docs, inline commenting on tasks, and an activity feed so nothing falls through the cracks. Mention teammates with @name, assign tasks in one click, and watch updates stream in instantly.',
+    a: 'AVENIQ shows live presence, real-time cursor activity on shared docs, inline commenting on tasks, and an activity feed so nothing falls through the cracks. Mention teammates with @name, assign tasks in one click, and watch updates stream in instantly.',
   },
 ];
 
@@ -725,7 +758,7 @@ const CTABanner = ({ setActivePage }) => (
         </motion.div>
         <motion.div variants={fade}>
           <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 17, color: '#888', margin: '0 0 36px', maxWidth: 500, marginLeft: 'auto', marginRight: 'auto' }}>
-            Join 12,000+ teams already using SyncFlow to move faster and stress less.
+            Join 12,000+ teams already using AVENIQ to move faster and stress less.
           </p>
         </motion.div>
         <motion.div variants={fade} style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -775,7 +808,7 @@ const Footer = ({ setActivePage }) => {
               <div style={{ width: 32, height: 32, borderRadius: 9, background: C.accent, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Zap size={16} color="#000" />
               </div>
-              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, fontWeight: 700, color: '#fff' }}>SyncFlow</span>
+              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 18, fontWeight: 700, color: '#fff' }}>AVENIQ</span>
             </div>
             <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#555', maxWidth: 220, lineHeight: 1.7, margin: 0 }}>
               The unified workspace for teams who ship. Tasks, docs, calendar, and analytics — all in one place.
@@ -797,7 +830,7 @@ const Footer = ({ setActivePage }) => {
           ))}
         </div>
         <div style={{ borderTop: '1px solid #1e1e1e', paddingTop: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-          <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#444' }}>© 2026 SyncFlow, Inc. All rights reserved.</span>
+          <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#444' }}>© 2026 AVENIQ, Inc. All rights reserved.</span>
           <div style={{ display: 'flex', gap: 16 }}>
             {/* SVG social icons inline */}
             {[

@@ -1,83 +1,56 @@
-<<<<<<< HEAD
-# FlowDesk – Modern SaaS Productivity Platform
+# AVENIQ
 
-FlowDesk is a modern and responsive SaaS web application built with React. It provides a clean user experience with productivity tools such as task management, notes, analytics, and team collaboration in a professional dashboard interface.
+AVENIQ is a front-end prototype of a team workspace. It puts the things a small team juggles every day — tasks, notes, job openings, a shared calendar and a few key numbers — into one dashboard instead of five browser tabs.
 
-## Features
+The project has two parts:
 
-- Modern SaaS Landing Page
-- Responsive Design
-- Analytics Dashboard
-- Task Management
-- Notes Management
-- Team Collaboration
-- Job Tracking
-- Interactive Charts
-- Statistics Cards
-- Smooth Animations
-- Reusable Components
-- Clean and Modern UI
+- **Landing page** — product pitch, feature overview, a Kanban preview, pricing tiers, FAQ and footer.
+- **Workspace console** — the app itself: a dashboard with charts, a task board, notes, a jobs tracker, calendar, team list, analytics and workspace settings.
 
-## Tech Stack
+All data is mock data held in React state. There is no backend or login yet.
 
-- React
-- Vite
-- JavaScript (ES6+)
-- CSS / Tailwind CSS
-- React Router
-- Recharts / Chart.js
-- Framer Motion
+## What's inside
 
-## Installation
+- Dashboard with weekly activity and analytics charts (Recharts)
+- Task board with statuses and priorities
+- Notes, jobs tracker, calendar and team directory screens
+- Settings screen (workspace name and preferences)
+- Motion built with Framer Motion: blur-in section reveals, a cursor-following 3D tilt on the hero dashboard, drifting background glow, shimmering headline text, a scroll progress bar and smooth page transitions
+- Respects the system "reduce motion" setting
+
+## Tech stack
+
+React 19 · Vite · Framer Motion · Recharts · lucide-react · plain CSS with design tokens
+
+## Run it locally
 
 ```bash
-git clone https://github.com/your-username/flowdesk-saas.git
-
+git clone https://github.com/Arham518/flowdesk-saas.git
 cd flowdesk-saas
-
 npm install
-
 npm run dev
 ```
 
-## Folder Structure
+Build for production with `npm run build`; the output goes to `dist/`.
+
+## Project structure
 
 ```
 src/
- ├── components
- ├── pages
- ├── layouts
- ├── assets
- ├── hooks
- ├── data
- ├── utils
- └── routes
+├── App.jsx                  # page switching + scroll progress bar
+├── components/              # Navbar, Button, Card
+├── pages/
+│   ├── SaaSProduct.jsx      # landing page
+│   └── WorkspaceConsole.jsx # dashboard app
+└── index.css                # design tokens and animation styles
 ```
 
-## Highlights
+## Next steps
 
-- Production-ready React architecture
-- Premium SaaS-inspired UI
-- Fully Responsive Layout
-- Interactive Dashboard
-- Reusable Components
-- Optimized Performance
-- Clean Code Structure
-- Easy to Scale
-
-## Future Improvements
-
-- User Authentication
-- Backend Integration
-- REST API Integration
-- Real-Time Notifications
-- Dark Mode
-- Role-Based Access Control
+- Real authentication and a backend API
+- Persisting tasks and notes
+- Dark mode
 
 ## License
 
-This project is created for learning, portfolio, and demonstration purposes.
-=======
-# flowdesk-saas
-A modern SaaS productivity platform built with React featuring task management, notes, analytics dashboard, responsive UI, reusable components, and clean architecture.
->>>>>>> 81711d8ef326982c09ec1683fae12a0af25ef2c9
+Built for learning and portfolio use.

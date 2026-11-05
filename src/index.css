@@ -193,3 +193,19 @@ code {
   box-shadow: var(--shadow-medium);
   border-color: var(--accent);
 }
+
+/* ── AVENIQ motion accents ─────────────────────────────── */
+.av-shimmer {
+  background: linear-gradient(110deg, #9C7A12 0%, #C9A227 30%, #F3DE8A 50%, #C9A227 70%, #9C7A12 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: av-shimmer 4.5s linear infinite;
+}
+@keyframes av-shimmer { from { background-position: 100% 0; } to { background-position: -150% 0; } }
+.av-brand { background: linear-gradient(90deg,#1C1B1A,#C9A227,#1C1B1A); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent !important; animation: av-shimmer 6s linear infinite; }
+.av-sheen::after { content: ''; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.28), transparent); transform: skewX(-20deg); transition: left 0.7s ease; }
+.av-sheen:hover::after { left: 140%; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

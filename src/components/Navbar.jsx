@@ -56,18 +56,18 @@ const Navbar = ({ activePage, setActivePage }) => {
             background: 'none', border: 'none', cursor: 'pointer',
           }}
         >
-          <div style={{
+          <motion.div whileHover={{ rotate: 12, scale: 1.08 }} transition={{ type: 'spring', stiffness: 300, damping: 14 }} style={{
             width: 32, height: 32, borderRadius: 8,
-            background: '#C9A227',
+            background: 'linear-gradient(135deg, #E4C35A, #C9A227 55%, #9C7A12)', boxShadow: '0 4px 14px rgba(201,162,39,0.35)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
             <Zap size={16} color="#FAF7F2" fill="#FAF7F2" />
-          </div>
+          </motion.div>
           <span style={{
             fontFamily: "'Playfair Display', serif",
             fontWeight: 700, fontSize: '1.2rem', color: '#1C1B1A',
-            letterSpacing: '-0.3px',
-          }}>SyncFlow</span>
+            letterSpacing: '1.5px',
+          }} className="av-brand">AVENIQ</span>
         </button>
 
         {/* Desktop nav – hide inside workspace */}
