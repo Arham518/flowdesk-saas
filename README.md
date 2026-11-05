@@ -1,56 +1,69 @@
 # AVENIQ
 
-AVENIQ is a front-end prototype of a team workspace. It puts the things a small team juggles every day — tasks, notes, job openings, a shared calendar and a few key numbers — into one dashboard instead of five browser tabs.
+A front-end prototype of a team workspace. It puts the things a small team juggles every day — tasks, notes, job openings, a shared calendar and a few key numbers — into one dashboard instead of five browser tabs.
 
-The project has two parts:
+Built with **React 19, Vite, Framer Motion, Recharts and lucide-react**, styled with plain CSS design tokens.
 
-- **Landing page** — product pitch, feature overview, a Kanban preview, pricing tiers, FAQ and footer.
-- **Workspace console** — the app itself: a dashboard with charts, a task board, notes, a jobs tracker, calendar, team list, analytics and workspace settings.
+> **Status:** front-end demo. All workspace data is mock data held in React state.
+> There is **no backend, no login and no persistence** — refresh clears edits.
 
-All data is mock data held in React state. There is no backend or login yet.
+## What works now vs. simulated vs. planned
 
-## What's inside
+| Area | Status |
+| --- | --- |
+| Landing page (pitch, features, Kanban preview, pricing, FAQ) | ✅ Works |
+| Workspace console navigation (dashboard, tasks, notes, jobs, calendar, team, analytics, settings) | ✅ Works |
+| Task board (add / complete / delete, priorities) | ✅ Works in-session |
+| Notes (create / edit / delete) | ✅ Works in-session |
+| Jobs tracker, calendar, team directory | ✅ UI with sample data |
+| Dashboard + analytics charts (Recharts) | 🧪 Sample series |
+| Motion (blur-in reveals, hero 3D tilt, scroll progress, page transitions) | ✅ Works; respects reduce-motion |
+| Auth / multi-user sync / server persistence | 🗓 Planned |
+| Dark mode | 🗓 Planned |
 
-- Dashboard with weekly activity and analytics charts (Recharts)
-- Task board with statuses and priorities
-- Notes, jobs tracker, calendar and team directory screens
-- Settings screen (workspace name and preferences)
-- Motion built with Framer Motion: blur-in section reveals, a cursor-following 3D tilt on the hero dashboard, drifting background glow, shimmering headline text, a scroll progress bar and smooth page transitions
-- Respects the system "reduce motion" setting
-
-## Tech stack
-
-React 19 · Vite · Framer Motion · Recharts · lucide-react · plain CSS with design tokens
-
-## Run it locally
+## Setup
 
 ```bash
 git clone https://github.com/Arham518/flowdesk-saas.git
 cd flowdesk-saas
 npm install
-npm run dev
+npm run dev       # Vite dev server
+npm run build     # production build → dist/
+npm run preview
+npm run lint      # oxlint
 ```
 
-Build for production with `npm run build`; the output goes to `dist/`.
+Requires Node 18+.
 
 ## Project structure
 
 ```
 src/
-├── App.jsx                  # page switching + scroll progress bar
-├── components/              # Navbar, Button, Card
-├── pages/
-│   ├── SaaSProduct.jsx      # landing page
-│   └── WorkspaceConsole.jsx # dashboard app
-└── index.css                # design tokens and animation styles
+  App.jsx                 landing ↔ workspace switch + scroll progress
+  components/             Navbar, Button, Card
+  pages/
+    SaaSProduct.jsx       marketing landing
+    WorkspaceConsole.jsx  dashboard app (all tabs + mock data)
+  index.css               design tokens and animation styles
+public/                   favicon.svg, icons.svg
 ```
 
-## Next steps
+## Known limitations
 
-- Real authentication and a backend API
-- Persisting tasks and notes
-- Dark mode
+- Edits live only in memory; closing the tab loses them.
+- Pricing, team members and chart numbers are illustrative.
+- No routing library — page state is a React `useState` flag.
 
-## License
+## Roadmap
 
-Built for learning and portfolio use.
+1. Authentication and a real API
+2. Persist tasks, notes and jobs
+3. Dark mode and shareable workspace links
+
+## Security
+
+This demo needs no secrets. Do not commit `.env` files if you later add API keys.
+
+## Author
+
+Muhammad Arham · [GitHub Arham518](https://github.com/Arham518)
